@@ -9,13 +9,21 @@ namespace ToDoList.Tests
     public class UnitTest1
     {
         [Fact]
-        public void ValidateToDoListItem()
+        public void ValidateEmptyTaskName()
         {
-            //ITodoListService todoListService = new Mock<Item>();
-            //var item = new Item {
-            //    Name = ""
-            //};
-            //todoListService.AddItem(item);
+            Mock<ITodoListService> mockService = new Mock<ITodoListService>();
+            var status = mockService.Object.AddItem(new Item() { Name = "" });
+
+            Assert.False(status,"Should be False because Task Name is Empty");
+        }
+
+        [Fact]
+        public void ValidateNullTaskName()
+        {
+            Mock<ITodoListService> mockService = new Mock<ITodoListService>();
+            var status = mockService.Object.AddItem(new Item() { Name = null });
+
+            Assert.False(status, "Should be False because Task Name is null");
         }
     }
 }
