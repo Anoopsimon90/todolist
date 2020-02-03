@@ -22,8 +22,21 @@ namespace ToDoList.Tests
         {
             Mock<ITodoListService> mockService = new Mock<ITodoListService>();
             var status = mockService.Object.AddItem(new Item() { Name = null });
-
+                
             Assert.False(status, "Should be False because Task Name is null");
         }
+          [Fact]
+        public void ValidateProfanityCheck()
+        {
+            Mock<ITodoListService> mockService = new Mock<ITodoListService>();
+            var status = mockService.Object.AddItem(new Item() { Name = "test" });
+
+            Assert.False(status, "Should be False because Task Name is null");
+
+        }
+
+
+
+
     }
 }

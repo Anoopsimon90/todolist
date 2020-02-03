@@ -21,8 +21,11 @@ namespace ToDoList.Services
         }
         public bool AddItem(Item item)
         {
-           // _logger.LogInformation("dsfdf");
-            var taskExist= ValidationHelper.IsTaskNameExist(item.Name, GetItems().Select(x=>x.Name).ToList());
+            // _logger.LogInformation("dsfdf");
+            if (ValidationHelper.TaskNameProfanityCheck(item.Name)) return false;
+
+            var taskExist = ValidationHelper.IsTaskNameExist(item.Name, GetItems().Select(x=>x.Name).ToList());
+
             if (taskExist) return false;
 
             try

@@ -9,7 +9,14 @@ namespace ToDoList.Utils
     {
         public static bool IsTaskNameExist(string taskName,List<string> taskNames)
         {
-            return taskNames.Contains(taskName) ? true : false;
+            return taskNames.Any(x=>x== taskName);
+        }
+
+        public static bool TaskNameProfanityCheck(string taskName)
+        {
+            var list = new List<string> {"demo","world","hello","test" };
+
+            return list.Any(x=>x== taskName);
         }
     }
 }
