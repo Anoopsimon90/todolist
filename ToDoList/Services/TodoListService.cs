@@ -13,49 +13,77 @@ namespace ToDoList.Services
     {
         private readonly ILogger _logger;
 
-        static string filePath = @"C:/tmp/db.json";
+        static string filePath = @"C:\tmp\db.json";
 
         public TodoListService(ILogger<TodoListService> logger)
         {
             _logger = logger;
         }
-        public bool AddItem(Item item)
+        public Response AddItem(Item item)
         {
-            // _logger.LogInformation("dsfdf");
-            if (ValidationHelper.TaskNameProfanityCheck(item.Name)) return false;
+            
+            if (ValidationHelper.TaskNameProfanityCheck(item.Name))
+                return new Response
+                {
+                    Message = "Profanity check failed",
+                    StatusCode = 0,
+                    Timestamp = DateTime.Now
+                };
 
-            var taskExist = ValidationHelper.IsTaskNameExist(item.Name, GetItems()?.Select(x=>x.Name).ToList());
+            var taskExist = ValidationHelper.IsTaskNameExist(item.Name, GetItems()?.Select(x => x.Name).ToList());
 
-            if (taskExist) return false;
+            if (taskExist) return new Response
+            {
+                Message = "Taskname already exist",
+                StatusCode = 0,
+                Timestamp = DateTime.Now
+            }; 
 
             try
             {
-                File.WriteAllText(filePath, JsonConvert.SerializeObject(item));
+                var totalRecords = GetItems();
+                var newRecordsList = (totalRecords?.Count == 0 || totalRecords is null) ? new List<Item>() : totalRecords;
+                newRecordsList.Add(item);
+
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(newRecordsList));
             }
             catch (Exception e)
             {
-                return false;                
+                return new Response
+                {
+                    Message = e.StackTrace,
+                    StatusCode = 0,
+                    Timestamp = DateTime.Now
+                }; 
             }
 
-            return true;
+            return new Response
+            {
+                Message = "Success",
+                StatusCode = 0,
+                Timestamp = DateTime.Now
+            }; ;
         }
         public bool RemoveItem() { return true; }
         public bool ModifyItem() { return true; }
 
         public Item GetItem(string itemName)
         {
-            return GetItems()?.FirstOrDefault(i=>i.Name == itemName);            
+
+            return GetItems()?.FirstOrDefault(i => i.Name == itemName);
         }
 
         public List<Item> GetItems()
         {
-           FileInfo fileInfo = new FileInfo(filePath);
-            if (!fileInfo.Directory.Exists)
+            FileInfo fileInfo = new FileInfo(filePath);
+
+            //This code isn't really needed , but just to make a fake DB
+            if (!fileInfo.Directory.Exists || !File.Exists(filePath) )
             {
                 fileInfo.Directory.Create();
                 File.CreateText(filePath).Close();
             }
-            
+
 
             var content = File.ReadAllText(filePath);
             if (string.IsNullOrEmpty(content)) return null;

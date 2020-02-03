@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using ToDoList.Services;
+using ToDoList.Utils;
 
 namespace ToDoList.Controllers
 {
@@ -15,10 +16,34 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
-        public void AddItem(Item item)
+        public ActionResult AddItem(Item item)
         {
             var response= todoListService.AddItem(item);
+
+            return Ok(response);
                         
+        }
+
+        [HttpGet]
+        public ActionResult GetItems()
+        {
+            var response = todoListService.GetItems();
+
+            return Ok(response);
+
+        }
+
+        [HttpGet("getItem")]
+        public ActionResult GetItem(string itemName)
+        {
+            if (ValidationHelper.IsTaskNameEmpty(itemName))
+                return BadRequest(itemName);
+
+            var response = todoListService.GetItem(itemName);
+                if (response is null) return NotFound(itemName);
+
+            return Ok(response);
+
         }
     }
 }

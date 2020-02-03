@@ -19,5 +19,10 @@ namespace ToDoList.Utils
 
             return list.Any(x=>x== taskName);
         }
+
+        public static bool IsTaskNameEmpty(string taskName)
+        {
+            return string.IsNullOrEmpty(taskName) ? true : false;
+        }
     }
 }
