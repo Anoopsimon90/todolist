@@ -18,7 +18,7 @@ export class Home extends Component {
         userName: 'You can add todo items with click of button'
       },name:'',
       description:'',
-      category:'',
+      category:'*Select Category*',
       priority:''
       
     };
@@ -31,7 +31,7 @@ export class Home extends Component {
   handleChanges = (event) => {
     let fieldName = event.target.name;
     let fieldValue = event.target.value;
-   
+   console.log('Dropdown : '+event.target.selected);
     this.setState({
       [fieldName]: fieldValue
     });
@@ -40,7 +40,7 @@ export class Home extends Component {
   }
 
   AddItem(event) {
-    console.log('Hey its done : '+this.state.name);    
+    console.log('Hey its done : '+this.state.priority);    
     event.preventDefault();
 
   }
@@ -63,8 +63,11 @@ export class Home extends Component {
   </Row>
   <Row>
   <label>Priority  
-  <input type="text" name='priority' value={this.state.priority} onChange={this.handleChanges} />
-  </label>
+  <select value={this.state.category} onChange={this.handleChanges} name='priority'>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>  </label>
   </Row>
   <Row>
   <label>Description  
@@ -73,7 +76,11 @@ export class Home extends Component {
   </Row>
   <Row>
   <label>Category  
-  <select/> 
+  <select value={this.state.category} onChange={this.handleChanges}>
+        <option value="Sports">Sports</option>
+        <option value="Work">Work</option>
+        <option value="Personal">Personal</option>
+      </select>
   </label>
   </Row>
   <Row>
