@@ -1,26 +1,86 @@
-import React, { Component } from 'react';
+import React, { Component,Form } from 'react';
+import { Button,Alert, Row } from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export class Home extends Component {
   displayName = Home.name
+  
+ 
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      date: new Date(),
+      texts : {
+        welcomeText: 'Welcome Anoop',
+        userName: 'You can add todo items with click of button'
+      },name:'',
+      description:'',
+      category:'',
+      priority:''
+      
+    };
 
+    this.AddItem = this.AddItem.bind(this);
+    this.handleChanges = this.handleChanges.bind(this);
+
+  }
+
+  handleChanges = (event) => {
+    let fieldName = event.target.name;
+    let fieldValue = event.target.value;
+   
+    this.setState({
+      [fieldName]: fieldValue
+    });
+    
+    
+  }
+
+  AddItem(event) {
+    console.log('Hey its done : '+this.state.name);    
+    event.preventDefault();
+
+  }
+   
+ 
   render() {
     return (
       <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we've also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
+        <div style={{marginTop:60}}>
+        <Alert variant="success">
+        <p>Welcome {this.state.texts.userName}</p>
+        </Alert>
+        </div>
+
+<form onSubmit={this.AddItem}>
+  <Row>
+ <label>Item Name    
+ <input type="text" name='name' value={this.state.name} onChange={this.handleChanges} />
+  </label>
+  </Row>
+  <Row>
+  <label>Priority  
+  <input type="text" name='priority' value={this.state.priority} onChange={this.handleChanges} />
+  </label>
+  </Row>
+  <Row>
+  <label>Description  
+  <input type="text" name='description' value={this.state.description} onChange={this.handleChanges} />
+  </label>
+  </Row>
+  <Row>
+  <label>Category  
+  <select/> 
+  </label>
+  </Row>
+  <Row>
+  <input type="submit" value="Submit" />
+  </Row>
+</form>
+        </div>
     );
   }
 }
