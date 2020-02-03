@@ -22,7 +22,11 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='add circle' /> ADD Item
               </NavItem>
             </LinkContainer>
-            
+            <LinkContainer to={'/'} exact>
+              <NavItem>
+                <Glyphicon glyph='add circle' /> View Items
+              </NavItem>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

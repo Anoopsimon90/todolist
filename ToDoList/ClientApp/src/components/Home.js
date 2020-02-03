@@ -62,7 +62,7 @@ export class Home extends Component {
 
   <Row>
   <Col xs="3">
- <label>Item Name    </label>
+ <label>Item Name </label>
  </Col>
 
  <Col xs="3">
@@ -75,7 +75,7 @@ export class Home extends Component {
   <Col xs="3">  <label>Priority  </label>  </Col>
 
   <Col xs="3">
-  <select value={this.state.category} onChange={this.handleChanges} name='priority'>
+  <select value={this.state.category} onChange={this.handleChanges} name='priority' >
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
