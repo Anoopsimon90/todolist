@@ -24,7 +24,7 @@ namespace ToDoList.Services
             // _logger.LogInformation("dsfdf");
             if (ValidationHelper.TaskNameProfanityCheck(item.Name)) return false;
 
-            var taskExist = ValidationHelper.IsTaskNameExist(item.Name, GetItems().Select(x=>x.Name).ToList());
+            var taskExist = ValidationHelper.IsTaskNameExist(item.Name, GetItems()?.Select(x=>x.Name).ToList());
 
             if (taskExist) return false;
 
@@ -49,7 +49,13 @@ namespace ToDoList.Services
 
         public List<Item> GetItems()
         {
-            if (!File.Exists(filePath)) return null;
+           FileInfo fileInfo = new FileInfo(filePath);
+            if (!fileInfo.Directory.Exists)
+            {
+                fileInfo.Directory.Create();
+                File.CreateText(filePath).Close();
+            }
+            
 
             var content = File.ReadAllText(filePath);
             if (string.IsNullOrEmpty(content)) return null;

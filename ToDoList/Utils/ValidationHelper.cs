@@ -9,6 +9,7 @@ namespace ToDoList.Utils
     {
         public static bool IsTaskNameExist(string taskName,List<string> taskNames)
         {
+            if (taskNames is null) return false;
             return taskNames.Any(x=>x== taskName);
         }
 
