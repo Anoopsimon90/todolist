@@ -1,14 +1,14 @@
 using Moq;
-using System;
 using ToDoList.Models;
 using ToDoList.Services;
 using Xunit;
 
 namespace ToDoList.Tests
 {
-    public class UnitTest1
+    public class ValidationTests
     {
         [Fact]
+        [Trait("validation","inputvalidation")]
         public void ValidateEmptyTaskName()
         {
             Mock<ITodoListService> mockService = new Mock<ITodoListService>();
@@ -18,6 +18,7 @@ namespace ToDoList.Tests
         }
 
         [Fact]
+        [Trait("validation", "inputvalidation")]
         public void ValidateNullTaskName()
         {
             Mock<ITodoListService> mockService = new Mock<ITodoListService>();
@@ -27,6 +28,7 @@ namespace ToDoList.Tests
         }
 
         [Theory]
+        [Trait("validation", "inputvalidation")]
         [InlineData("test")]
         [InlineData("hello")]
         [InlineData("demo")]
