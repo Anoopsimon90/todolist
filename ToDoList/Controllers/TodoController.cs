@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using ToDoList.Services;
 using ToDoList.Utils;
@@ -7,6 +8,7 @@ namespace ToDoList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class TodoController : ControllerBase
     {
         private readonly ITodoListService todoListService;

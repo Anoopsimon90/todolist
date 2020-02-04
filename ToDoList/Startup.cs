@@ -12,6 +12,8 @@ namespace ToDoList
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,6 +24,18 @@ namespace ToDoList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000",
+                                        "http://localhost:3001")
+                    .AllowAnyHeader()
+                     .AllowAnyMethod(); ;
+                });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
@@ -59,6 +73,9 @@ namespace ToDoList
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
