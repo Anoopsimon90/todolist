@@ -17,6 +17,7 @@ export class Home extends Component {
         welcomeText: 'Welcome Anoop',
         userName: 'You can add todo items with click of button'
       }, 
+      addItemUrl:'https://localhost:44347/api/Todo',
       name: '',
       description: '',
       category: '',
@@ -38,7 +39,7 @@ export class Home extends Component {
     event.preventDefault();
     const postObject= { name: this.state.name ,description:this.state.description,category: this.state.category,priority: this.state.priority}
 
-    Axios.post('https://localhost:44347/api/Todo', postObject).then(response=>{ });
+    Axios.post(this.state.addItemUrl, postObject).then(response=>{ });
 
   }
 
