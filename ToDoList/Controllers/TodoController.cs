@@ -8,7 +8,7 @@ namespace ToDoList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors]
+    //[EnableCors]
     public class TodoController : ControllerBase
     {
         private readonly ITodoListService todoListService;
@@ -18,7 +18,7 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddItem(Item item)
+        public ActionResult AddItem([FromBody] Item item)
         {
             var response= todoListService.AddItem(item);
 

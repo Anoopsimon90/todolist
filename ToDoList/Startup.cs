@@ -12,7 +12,7 @@ namespace ToDoList
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+      //  readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -24,17 +24,16 @@ namespace ToDoList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy(MyAllowSpecificOrigins,
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:3000",
-                                        "http://localhost:3001")
-                    .AllowAnyHeader()
-                     .AllowAnyMethod(); ;
-                });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(MyAllowSpecificOrigins,
+            //    builder =>
+            //    {
+            //        builder.WithOrigins("https://localhost:44347")                                        
+            //                .AllowAnyHeader()
+            //                .AllowAnyMethod(); 
+            //    });
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -46,7 +45,7 @@ namespace ToDoList
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TO DO List", Version = "v1" });
             });
 
             services.AddTransient<ITodoListService, TodoListService>();
@@ -74,7 +73,7 @@ namespace ToDoList
                 app.UseHsts();
             }
 
-            app.UseCors(MyAllowSpecificOrigins);
+            //app.UseCors(MyAllowSpecificOrigins);
 
 
             app.UseHttpsRedirection();
